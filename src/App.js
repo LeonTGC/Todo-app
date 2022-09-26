@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useState } from "react";
+import UserInput from "./components/UserInput";
+import Card from "./components/Card";
 
-function App() {
+const App = () => {
+  const [tasks, setTasks] = useState([]);
+  const [input, setInput] = useState("");
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setTasks([...tasks, input]);
+    setInput("");
+  };
+
+  const removeHandler = (index) => {
+    let storedTasks = [...tasks];
+    storedTasks.splice(index, 1);
+    setTasks(storedTasks);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div>
+        <h1>todo list</h1>
+      </div>
+      <div>
+        <UserInput
+          handleSubmit={handleSubmit}
+          setInput={setInput}
+          input={input}
+        />
+      </div>
+      <Card tasks={tasks} removeHandler={removeHandler}/>
     </div>
   );
-}
+};
 
 export default App;
